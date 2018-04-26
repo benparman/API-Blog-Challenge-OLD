@@ -12,6 +12,8 @@ const app = express();
 app.use(morgan('common'));
 
 BlogPosts.create('First Post','This is my first blog post!','Ben','2018-04-25');
+BlogPosts.create('Post 2','2 is better than 1','Rachel','NOW');
+BlogPosts.create('THREE!','Third time\'s a charm','ThreeAmigos','Future');
 
 //--------------------------------------------------------------------------------
 app.get('/blog-posts', (req, res) => {
@@ -55,6 +57,12 @@ app.put('/blog-posts/:id', jsonParser, (req, res) => {
     author: req.body.author,
     publishDate: req.body.publishDate
   });
+  res.status(201).end();
+});
+//--------------------------------------------------------------------------------
+app.delete('/blog-posts/:id', (req, res) => {
+  BlogPosts.delete(req.params.id);
+  console.log(`Deleted post #\`${req.params.id}\``);
   res.status(204).end();
 });
 //--------------------------------------------------------------------------------
